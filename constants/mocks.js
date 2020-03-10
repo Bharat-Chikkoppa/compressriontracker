@@ -94,4 +94,24 @@ const details = {
   notes: "Physiotherapy treatment"
 };
 
-export { categories, explore, products, profile, details };
+const chart = [
+  1.1,
+  3,
+  1.5,
+  2.3,
+  3.2,
+  7,
+  8.2,
+  1.2,
+  2,
+  1.2,
+  8,
+  3.8,
+  5.8,
+  3.9,
+  5.1,
+  0.1,
+  6
+];
+
+export { categories, explore, products, profile, details,chart };

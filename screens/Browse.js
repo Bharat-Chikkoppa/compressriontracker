@@ -74,7 +74,7 @@ class Browse extends Component {
             {categories.map(category => (
               <TouchableOpacity
                 key={category.name}
-                onPress={() => navigation.navigate("Prescription", { category })}
+                onPress={() => navigation.navigate("Linchart", { category })}
               >
                 <Card center middle shadow style={styles.category}>
                   <Badge
