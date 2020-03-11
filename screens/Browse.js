@@ -9,6 +9,9 @@ import {
 
 import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
+import usagelogo from "../assets/icons/usage.png";
+import prescriptionlogo from "../assets/icons/prescription2.png";
+
 
 const { width } = Dimensions.get("window");
 
@@ -70,11 +73,95 @@ class Browse extends Component {
           showsVerticalScrollIndicator={false}
           style={{ paddingVertical: theme.sizes.base * 2 }}
         >
-          <Block flex={false} row space="between" style={styles.categories}>
+          {/* <Block flex={false} row center space="between" style={styles.header}>
+          <Text h1 bold>
+            Prescription
+          </Text>
+          <Button onPress={() => navigation.navigate("Prescription")}>
+            <Image source={profile.avatar} style={styles.avatar} />
+          </Button>
+        </Block> */}
+        <Block flex={false} row center space="between" style={styles.header}>
+        <TouchableOpacity
+                key="prescription"
+                onPress={() => navigation.navigate("Prescription")}
+              >
+          <Card center middle shadow style={styles.category}>
+              <Badge
+                margin={[0, 0, 15]}
+                size={50}
+                // color="rgba(41,216,143,0.20)"
+              >
+                <Image source = {prescriptionlogo} />
+              </Badge>
+              <Text medium height={20}>
+                Prescription
+              </Text>
+            
+          </Card>
+        </TouchableOpacity>
+          <TouchableOpacity
+                key="usage"
+                onPress={() => navigation.navigate("Linchart")}
+              >
+          <Card center middle shadow style={styles.category}>
+              <Badge
+                margin={[0, 0, 15]}
+                size={50}
+                // color="rgba(41,216,143,0.20)"
+              >
+                <Image source = {usagelogo} size = {30} />
+              </Badge>
+              <Text medium height={20}>
+                Usage
+              </Text>
+            
+          </Card>
+        </TouchableOpacity>
+        </Block>
+        <Block flex={false} row center space="between" style={styles.header}>
+        <TouchableOpacity
+                key="prescription"
+                onPress={() => navigation.navigate("Prescription")}
+              >
+          <Card center middle shadow style={styles.category}>
+              <Badge
+                margin={[0, 0, 15]}
+                size={50}
+                // color="rgba(41,216,143,0.20)"
+              >
+                <Image source = {prescriptionlogo} />
+              </Badge>
+              <Text medium height={20}>
+                Prescription
+              </Text>
+            
+          </Card>
+        </TouchableOpacity>
+          <TouchableOpacity
+                key="usage"
+                onPress={() => navigation.navigate("Linchart")}
+              >
+          <Card center middle shadow style={styles.category}>
+              <Badge
+                margin={[0, 0, 15]}
+                size={50}
+                // color="rgba(41,216,143,0.20)"
+              >
+                <Image source = {usagelogo} size = {30} />
+              </Badge>
+              <Text medium height={20}>
+                Usage
+              </Text>
+            
+          </Card>
+        </TouchableOpacity>
+        </Block>
+          {/* <Block flex={false} row space="between" style={styles.categories}>
             {categories.map(category => (
               <TouchableOpacity
                 key={category.name}
-                onPress={() => navigation.navigate("Linchart", { category })}
+                onPress={() => navigation.navigate("Sstat", { category })}
               >
                 <Card center middle shadow style={styles.category}>
                   <Badge
@@ -93,7 +180,7 @@ class Browse extends Component {
                 </Card>
               </TouchableOpacity>
             ))}
-          </Block>
+          </Block> */}
         </ScrollView>
       </Block>
     );

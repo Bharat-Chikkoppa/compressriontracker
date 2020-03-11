@@ -14,6 +14,7 @@ import Settings from "../screens/Settings";
 import Prescription from "../screens/Prescription";
 import Usage from "../screens/Usage";
 import Linchart from "../screens/Linchart";
+import Sstat from "../screens/Sstat";
 
 
 import { theme } from "../constants";
@@ -30,7 +31,8 @@ const screens = createStackNavigator(
     Settings,
     Prescription,
     Usage,
-    Linchart
+    Linchart,
+    Sstat
   },
   {
     defaultNavigationOptions: {

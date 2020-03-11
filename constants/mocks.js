@@ -94,6 +94,13 @@ const details = {
   notes: "Physiotherapy treatment"
 };
 
+const stats = {
+  stockings: "Class B(20 mmHg - 30 mmHg)",
+  usagefrom: "01-01-2020",
+  pressure: "24 mmHg",
+  bluetooth: "connected",
+};
+
 const chart = [
   1.1,
   3,
@@ -114,4 +121,4 @@ const chart = [
   6
 ];
 
-export { categories, explore, products, profile, details,chart };
+export { categories, explore, products, profile, details,chart,stats };
