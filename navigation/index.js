@@ -15,6 +15,7 @@ import Prescription from "../screens/Prescription";
 import Usage from "../screens/Usage";
 import Linchart from "../screens/Linchart";
 import Sstat from "../screens/Sstat";
+import NursePatient from "../screens/NursePatient";
 
 
 import { theme } from "../constants";
@@ -32,7 +33,8 @@ const screens = createStackNavigator(
     Prescription,
     Usage,
     Linchart,
-    Sstat
+    Sstat,
+    NursePatient
   },
   {
     defaultNavigationOptions: {
@@ -46,7 +48,7 @@ const screens = createStackNavigator(
       headerBackTitle: null,
       headerLeftContainerStyle: {
         alignItems: "center",
-        marginLeft: theme.sizes.base * 2,
+        marginLeft: theme.sizes.base ,
         paddingRight: theme.sizes.base
       },
       headerRightContainerStyle: {

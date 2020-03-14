@@ -122,7 +122,7 @@ class Browse extends Component {
         <Block flex={false} row center space="between" style={styles.header}>
         <TouchableOpacity
                 key="prescription"
-                onPress={() => navigation.navigate("Prescription")}
+                onPress={() => navigation.navigate("NursePatient")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -133,7 +133,7 @@ class Browse extends Component {
                 <Image source = {prescriptionlogo} />
               </Badge>
               <Text medium height={20}>
-                Prescription
+                Nurse
               </Text>
             
           </Card>

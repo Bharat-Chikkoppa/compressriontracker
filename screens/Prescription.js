@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Image, StyleSheet, ScrollView, TextInput } from "react-native";
 import Slider from "react-native-slider";
 
-import { Divider, Button, Block, Text, Switch } from "../components";
+import { Divider, Button, Block, Text, Switch,Card } from "../components";
 import { theme, mocks } from "../constants";
 
 class Prescription extends Component {
@@ -57,6 +57,34 @@ class Prescription extends Component {
         </Block>
 
         <ScrollView showsVerticalScrollIndicator={false}>
+        <Block style={{ marginLeft: 15,marginRight: 25 }}>
+          <Card center middle shadow style={{ backgroundColor: "#57c2e6" }}>
+            <Block style={{ marginLeft: -160, color: "#32cd32" }}>
+              <Text
+                medium
+                h2
+                height={0}
+                style={{ fontWeight: "bold", color: "#ffffff" }}
+              >
+              Hello! Bharat
+              </Text>
+              <Text medium h4 height={0} style={{ color: "#ffffff" }}>
+              Your Next Appointment
+              </Text>
+              <Text h1
+                style={{
+                  position: "absolute",
+                  right: -150,
+                  top: 7,
+                  fontWeight: "bold",
+                  color: "#ff039a" 
+                }}
+              >
+                28 Feb
+              </Text>
+            </Block>
+          </Card>
+        </Block>
         <Divider margin={[theme.sizes.base, theme.sizes.base * 2]} />
         <Block style={styles.inputs}>
             <Block row space="between" margin={[10, 0]} style={styles.inputRow}>
