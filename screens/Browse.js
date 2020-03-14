@@ -97,7 +97,7 @@ class Browse extends Component {
               <Text medium height={20}>
                 Prescription
               </Text>
-            
+
           </Card>
         </TouchableOpacity>
           <TouchableOpacity
@@ -115,14 +115,14 @@ class Browse extends Component {
               <Text medium height={20}>
                 Usage
               </Text>
-            
+
           </Card>
         </TouchableOpacity>
         </Block>
         <Block flex={false} row center space="between" style={styles.header}>
         <TouchableOpacity
                 key="prescription"
-                onPress={() => navigation.navigate("NursePatient")}
+                onPress={() => navigation.navigate("PatientList")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -135,7 +135,7 @@ class Browse extends Component {
               <Text medium height={20}>
                 Nurse
               </Text>
-            
+
           </Card>
         </TouchableOpacity>
           <TouchableOpacity
@@ -153,7 +153,7 @@ class Browse extends Component {
               <Text medium height={20}>
                 Usage
               </Text>
-            
+
           </Card>
         </TouchableOpacity>
         </Block>
