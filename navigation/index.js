@@ -13,10 +13,11 @@ import Product from "../screens/Product";
 import Settings from "../screens/Settings";
 import Prescription from "../screens/Prescription";
 import Usage from "../screens/Usage";
-import Linchart from "../screens/Linchart";
 import Sstat from "../screens/Sstat";
 import NursePatient from "../screens/NursePatient";
 import PatientList from "../screens/PatientList";
+import BluetoothArduino from "../screens/BluetoothArduino";
+
 
 import { theme } from "../constants";
 
@@ -32,10 +33,10 @@ const screens = createStackNavigator(
     Settings,
     Prescription,
     Usage,
-    Linchart,
     Sstat,
     NursePatient,
-    PatientList
+    PatientList,
+    BluetoothArduino
   },
   {
     defaultNavigationOptions: {

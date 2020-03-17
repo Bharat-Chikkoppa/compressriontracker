@@ -9,8 +9,12 @@ import {
 
 import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
+
 import usagelogo from "../assets/icons/usage.png";
 import prescriptionlogo from "../assets/icons/prescription2.png";
+import sstatlogo from "../assets/icons/status.png";
+import supportlogo from "../assets/icons/support.png";
+import bluetoothlogo from "../assets/icons/bluetooth.png";
 
 
 const { width } = Dimensions.get("window");
@@ -102,7 +106,7 @@ class Browse extends Component {
         </TouchableOpacity>
           <TouchableOpacity
                 key="usage"
-                onPress={() => navigation.navigate("Linchart")}
+                onPress={() => navigation.navigate("Usage")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -121,8 +125,8 @@ class Browse extends Component {
         </Block>
         <Block flex={false} row center space="between" style={styles.header}>
         <TouchableOpacity
-                key="prescription"
-                onPress={() => navigation.navigate("PatientList")}
+                key="sstat"
+                onPress={() => navigation.navigate("Sstat")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -130,17 +134,17 @@ class Browse extends Component {
                 size={50}
                 // color="rgba(41,216,143,0.20)"
               >
-                <Image source = {prescriptionlogo} />
+                <Image source = {sstatlogo} />
               </Badge>
               <Text medium height={20}>
-                Nurse
+                Status
               </Text>
 
           </Card>
         </TouchableOpacity>
           <TouchableOpacity
                 key="usage"
-                onPress={() => navigation.navigate("Linchart")}
+                onPress={() => navigation.navigate("Usage")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -148,39 +152,35 @@ class Browse extends Component {
                 size={50}
                 // color="rgba(41,216,143,0.20)"
               >
-                <Image source = {usagelogo} size = {30} />
+                <Image source = {supportlogo} size = {30} />
               </Badge>
               <Text medium height={20}>
-                Usage
+                Support
               </Text>
 
           </Card>
         </TouchableOpacity>
         </Block>
-          {/* <Block flex={false} row space="between" style={styles.categories}>
-            {categories.map(category => (
-              <TouchableOpacity
-                key={category.name}
-                onPress={() => navigation.navigate("Sstat", { category })}
+        <Block flex={false} row center space="between" style={styles.header}>
+        <TouchableOpacity
+                key="bluetootharduino"
+                onPress={() => navigation.navigate("NursePatient")}
               >
-                <Card center middle shadow style={styles.category}>
-                  <Badge
-                    margin={[0, 0, 15]}
-                    size={50}
-                    color="rgba(41,216,143,0.20)"
-                  >
-                    <Image source={category.image} />
-                  </Badge>
-                  <Text medium height={20}>
-                    {category.name}
-                  </Text>
-                  <Text gray caption>
-                    {category.count} products
-                  </Text>
-                </Card>
-              </TouchableOpacity>
-            ))}
-          </Block> */}
+          <Card center middle shadow style={styles.category}>
+              <Badge
+                margin={[0, 0, 15]}
+                size={50}
+                // color="rgba(41,216,143,0.20)"
+              >
+                <Image source = {bluetoothlogo} />
+              </Badge>
+              <Text medium height={20}>
+                Bluetooth
+              </Text>
+
+          </Card>
+        </TouchableOpacity>
+        </Block>
         </ScrollView>
       </Block>
     );

@@ -12,16 +12,19 @@ import {
   AppRegistry
 } from "react-native";
 
-import { Card, Badge, Button, Block, Text, Divider } from "../components";
+import { Card, Badge, Button, Block, Text } from "../components";
+
+import { Divider } from 'react-native-elements';
+
 
 import { theme, mocks } from "../constants";
 
 import call from "react-native-phone-call";
-import SendSMS from 'react-native-sms-x';
+import SendSMS from "react-native-sms-x";
 
 const { width } = Dimensions.get("window");
 
-class Linchart extends React.Component {
+class NursePatient extends React.Component {
   state = {};
   renderChart() {
     return (
@@ -105,7 +108,6 @@ class Linchart extends React.Component {
       </Block>
     );
   }
-  
 
   renderHeader() {
     const { user } = this.props;
@@ -114,7 +116,6 @@ class Linchart extends React.Component {
       prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
     };
     return (
-        
       <Block flex={0.42} column style={{ paddingHorizontal: 15 }}>
         <Block flex={false} row style={{ paddingVertical: 15 }}>
           <Block style={{ marginLeft: 10 }}>
@@ -130,62 +131,66 @@ class Linchart extends React.Component {
             shadow
             style={{ backgroundColor: "#ffffff", paddingVertical: 55 }}
           >
-            <Block >
-            <Block center style={{ position:"relative" ,marginLeft:-20}} >
-                <Image
-                    style={{
-                        position:"absolute",
-                        right: 120,
-                        top: -25,
-                        width: 50,
-                        height: 50
-                    }}
-                    source={require("../assets/icons/letterc.png")}
-                />
-                <Block style={{marginLeft:50 , position : "absolute" , width:200}}>
-                    <Text medium h2 height={0} style={{ color: "#000000", marginLeft:10,marginTop:-45}}>
-                        Christina Lewis
-                    </Text>
-                    <Text medium h4 height={0} style={{ color: "#000000", marginLeft:10,marginTop:0}}>
-                        Female, 47
-                    </Text>
-                    <Text medium h4 height={0} style={{ color: "#30cf82", marginLeft:10,marginTop:0}}>
-                        ID: 520
-                    </Text>
-                </Block>
-            </Block>
-            <Block style={{width:200, position:"absolute", marginLeft:100}}>
-              <Button  style={{ marginLeft:10,width:40,marginTop:-30}} onPress={() => call(args).catch(console.error)}>
-                    <Image
-                        style={{
-                        position: "absolute",
-                        width: 40,
-                        height: 40
-                        }}
-                        source={require("../assets/icons/supportnurse.png")}
-                    />
-              </Button>
-            
-              {/* <Button
-                style={{ position: "absolute", marginLeft:230, marginTop: 0 }
-                onPress={() => 
-                    console.log("Button pressed")
-                }
-              >
+            <Block>
+              <Block center style={{ position: "relative", marginLeft: -20 }}>
                 <Image
                   style={{
                     position: "absolute",
-                    right: 0,
-                    top: 7,
-                    width: 30,
-                    height: 30
+                    right: 120,
+                    top: -25,
+                    width: 50,
+                    height: 50
                   }}
-                  source={require("../assets/icons/message.png")}
+                  source={require("../assets/icons/letterc.png")}
                 />
-              </Button> */}
+                <Block
+                  style={{ marginLeft: 50, position: "absolute", width: 200 }}
+                >
+                  <Text
+                    medium
+                    h2
+                    height={0}
+                    style={{ color: "#000000", marginLeft: 10, marginTop: -45 }}
+                  >
+                    Christina Lewis
+                  </Text>
+                  <Text
+                    medium
+                    h4
+                    height={0}
+                    style={{ color: "#000000", marginLeft: 10, marginTop: 0 }}
+                  >
+                    Female, 47
+                  </Text>
+                  <Text
+                    medium
+                    h4
+                    height={0}
+                    style={{ color: "#30cf82", marginLeft: 10, marginTop: 0 }}
+                  >
+                    ID: 520
+                  </Text>
+                </Block>
+              </Block>
+              <Block
+                style={{ width: 200, position: "absolute", marginLeft: 100 }}
+              >
+                <Button
+                  style={{ marginLeft: 10, width: 40, marginTop: -30 }}
+                  onPress={() => call(args).catch(console.error)}
+                >
+                  <Image
+                    style={{
+                      position: "absolute",
+                      width: 40,
+                      height: 40
+                    }}
+                    source={require("../assets/icons/supportnurse.png")}
+                  />
+                </Button>
+              </Block>
+            </Block>
 
-            </Block>
-            </Block>
           </Card>
         </Block>
         <Block center flex={1}>
@@ -202,10 +207,10 @@ class Linchart extends React.Component {
     );
   }
 }
-Linchart.defaultProps = {
+NursePatient.defaultProps = {
   chart: mocks.chart
 };
-export default Linchart;
+export default NursePatient;
 
 const styles = StyleSheet.create({
   safe: {
@@ -248,4 +253,4 @@ const styles = StyleSheet.create({
     maxWidth: width - theme.sizes.padding * 1.4 - theme.sizes.base
   }
 });
-AppRegistry.registerComponent('NursePatient', () => NursePatient);
+AppRegistry.registerComponent("NursePatient", () => NursePatient);
