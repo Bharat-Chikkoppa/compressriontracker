@@ -10,13 +10,51 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import firebase from 'firebase';
+
 import { Card, Badge, Button, Block, Text, Divider } from "../components";
 
 import { theme, mocks } from "../constants";
 
 const { width } = Dimensions.get("window");
 
+var pressureValues = [];
+var averagePressure = 0 ;
+
 class Usage extends React.Component {
+
+  componentWillMount() {
+
+        // To Configure react native app with cloud of Google Firebase database !
+        var firebaseConfig = {
+          apiKey: "AIzaSyDaVtfZ9h0A2ECQ5pF9r6HGk7rmRmv0EIg",
+          authDomain: "stocking-tracker.firebaseapp.com",
+          databaseURL: "https://stocking-tracker.firebaseio.com",
+          projectId: "stocking-tracker",
+          storageBucket: "stocking-tracker.appspot.com",
+          messagingSenderId: "528805073233",
+          appId: "1:528805073233:web:23aeaa8aadeb4cb97c0370",
+          measurementId: "G-DFHHG84ZLG"
+        };
+        // Initialize Firebase
+        //firebase.initializeApp(firebaseConfig);
+        pressureValues =[];
+        if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+        }
+        var totalPressure =0 ;
+        var firebaseRef = firebase.database().ref('locations');
+        firebaseRef.on("child_added", function(child) {
+          var pressureData = child.val().stockingPressure;
+          pressureValues.push(pressureData);
+          totalPressure = totalPressure + pressureData;
+          // console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+        });
+        averagePressure = totalPressure/pressureValues.length;
+        console.log(JSON.stringify(pressureValues));
+      }
+
+
   state = {};
   renderChart() {
     return (
@@ -34,7 +72,7 @@ class Usage extends React.Component {
             // labels: ["January", "February", "March", "April", "May", "June"],
             datasets: [
               {
-                data: mocks.chart
+                data: pressureValues
               }
             ]
           }}
@@ -92,7 +130,7 @@ class Usage extends React.Component {
                   color: "#00ba09"
                 }}
               >
-                10 hr/day
+                {averagePressure}  hrs/day
               </Text>
             </Block>
           </Card>

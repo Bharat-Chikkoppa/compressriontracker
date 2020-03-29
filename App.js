@@ -7,6 +7,8 @@ import { Asset } from "expo-asset";
 import Navigation from "./navigation";
 import { Block } from "./components";
 
+
+
 // import all used images
 const images = [
   require("./assets/icons/back.png"),
@@ -36,6 +38,8 @@ export default class App extends React.Component {
     isLoadingComplete: false
   };
 
+
+
   handleResourcesAsync = async () => {
     // we're caching all the images
     // for better performance on the app
@@ -46,6 +50,8 @@ export default class App extends React.Component {
 
     return Promise.all(cacheImages);
   };
+
+
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

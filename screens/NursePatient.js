@@ -1,5 +1,7 @@
 import React from "react";
 
+import firebase from 'firebase';
+
 import { LineChart } from "react-native-chart-kit";
 import {
   Dimensions,
@@ -26,6 +28,39 @@ const { width } = Dimensions.get("window");
 
 class NursePatient extends React.Component {
   state = {};
+
+  componentWillMount() {
+
+        // To Configure react native app with cloud of Google Firebase database !
+        var firebaseConfig = {
+          apiKey: "AIzaSyDaVtfZ9h0A2ECQ5pF9r6HGk7rmRmv0EIg",
+          authDomain: "stocking-tracker.firebaseapp.com",
+          databaseURL: "https://stocking-tracker.firebaseio.com",
+          projectId: "stocking-tracker",
+          storageBucket: "stocking-tracker.appspot.com",
+          messagingSenderId: "528805073233",
+          appId: "1:528805073233:web:23aeaa8aadeb4cb97c0370",
+          measurementId: "G-DFHHG84ZLG"
+        };
+        // Initialize Firebase
+        //firebase.initializeApp(firebaseConfig);
+        pressureValues =[];
+        if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+        }
+        var totalPressure =0 ;
+        var firebaseRef = firebase.database().ref('locations');
+        firebaseRef.on("child_added", function(child) {
+          var pressureData = child.val().stockingPressure;
+          pressureValues.push(pressureData);
+          totalPressure = totalPressure + pressureData;
+          // console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+        });
+        averagePressure = totalPressure/pressureValues.length;
+        console.log(JSON.stringify(pressureValues));
+      }
+
+
   renderChart() {
     return (
       <Block flex={1.0} column style={{ paddingHorizontal: 0 }}>
@@ -42,7 +77,7 @@ class NursePatient extends React.Component {
             // labels: ["January", "February", "March", "April", "May", "June"],
             datasets: [
               {
-                data: mocks.chart
+                data: pressureValues
               }
             ]
           }}

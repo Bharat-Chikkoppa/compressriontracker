@@ -5,6 +5,8 @@ import Slider from "react-native-slider";
 import { Divider, Button, Block, Text, Switch,Card } from "../components";
 import { theme, mocks } from "../constants";
 
+import firebase from 'firebase';
+
 class Prescription extends Component {
   state = {
 
@@ -42,6 +44,43 @@ class Prescription extends Component {
     //return <Text bold>{details[name]}</Text>;
  // }
 
+ componentWillMount() {
+
+       // To Configure react native app with cloud of Google Firebase database !
+       var firebaseConfig = {
+         apiKey: "AIzaSyDaVtfZ9h0A2ECQ5pF9r6HGk7rmRmv0EIg",
+         authDomain: "stocking-tracker.firebaseapp.com",
+         databaseURL: "https://stocking-tracker.firebaseio.com",
+         projectId: "stocking-tracker",
+         storageBucket: "stocking-tracker.appspot.com",
+         messagingSenderId: "528805073233",
+         appId: "1:528805073233:web:23aeaa8aadeb4cb97c0370",
+         measurementId: "G-DFHHG84ZLG"
+       };
+       // Initialize Firebase
+       //firebase.initializeApp(firebaseConfig);
+
+       if (!firebase.apps.length) {
+         firebase.initializeApp(firebaseConfig);
+       }
+
+       // firebase.database().ref('locations').on('value', (data) => {
+       //    var pressureData = data.val();
+       //    var pressureValues = [];
+       //    console.log(pressureData);
+       //    for(i=0;i<pressureData.length;i++){
+       //      console.log("*********"+pressureData[i].stockingPressure);
+       //      pressureValues.push(pressureData[i].stockingPressure);
+       //    }
+       // })
+       var firebaseRef = firebase.database().ref('locations');
+       firebaseRef.on("child_added", function(child) {
+         var pressureData = child.val();
+         console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+       });
+
+     }
+
   render() {
     const { details, editing } = this.state;
 
@@ -77,7 +116,7 @@ class Prescription extends Component {
                   right: -150,
                   top: 7,
                   fontWeight: "bold",
-                  color: "#ff039a" 
+                  color: "#ff039a"
                 }}
               >
                 28 Feb
@@ -93,7 +132,7 @@ class Prescription extends Component {
                   Doctor
                 </Text>
                 <Text bold>{details.doctorname}</Text>
-              </Block>             
+              </Block>
             </Block>
             <Block row space="between" margin={[10, 0]} style={styles.inputRow}>
               <Block>
@@ -101,7 +140,7 @@ class Prescription extends Component {
                   Nurse
                 </Text>
                 <Text bold>{details.nursename}</Text>
-              </Block>             
+              </Block>
             </Block>
             <Block row space="between" margin={[10, 0]} style={styles.inputRow}>
               <Block>
@@ -112,7 +151,7 @@ class Prescription extends Component {
               </Block>
             </Block>
           </Block>
-         
+
 
           <Divider margin={[theme.sizes.base, theme.sizes.base * 2]} />
           <Block style={styles.inputs}>
@@ -122,7 +161,7 @@ class Prescription extends Component {
                   Compression Stockings
                 </Text>
                 <Text bold>{details.stockings}</Text>
-              </Block>             
+              </Block>
             </Block>
             <Block row space="between" margin={[10, 0]} style={styles.inputRow}>
               <Block>
@@ -130,13 +169,13 @@ class Prescription extends Component {
                   Additional Notes
                 </Text>
                 <Text bold>{details.notes}</Text>
-              </Block>             
+              </Block>
             </Block>
             </Block>
 
           <Divider />
 
-          
+
         </ScrollView>
       </Block>
     );
