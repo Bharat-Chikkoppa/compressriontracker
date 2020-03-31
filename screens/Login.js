@@ -11,7 +11,7 @@ import { theme } from "../constants";
 
 const VALID_EMAIL = "contact@react-ui-kit.com";
 const VALID_PASSWORD = "subscribe";
-const USER_ROLE = "user";
+const USER_ROLE = "nurse";
 
 export default class Login extends Component {
   state = {
@@ -42,7 +42,7 @@ export default class Login extends Component {
     if (!errors.length) {
       console.log(USER_ROLE);
         if(USER_ROLE == "nurse"){
-          navigation.navigate("PatientList");
+          navigation.navigate("nursehome");
         }else{
         navigation.navigate("Browse");
       }

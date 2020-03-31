@@ -16,6 +16,7 @@ import Usage from "../screens/Usage";
 import Sstat from "../screens/Sstat";
 import NursePatient from "../screens/NursePatient";
 import PatientList from "../screens/PatientList";
+import nursehome from "../screens/nursehome";
 // import BluetoothArduino from "../screens/BluetoothArduino";
 
 
@@ -35,7 +36,8 @@ const screens = createStackNavigator(
     Usage,
     Sstat,
     NursePatient,
-    PatientList
+    PatientList,
+    nursehome
   },
   {
     defaultNavigationOptions: {
