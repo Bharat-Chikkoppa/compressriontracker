@@ -11,9 +11,9 @@ function Item({ item }) {
         <Text style={{fontWeight:"bold"}}>{item.name}</Text>
         <Text>{item.position}</Text>
       </View>
-      <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}} 
-          // key="prescription"
-          // onPress={() => navigation.navigate("Prescription")}
+      <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}}
+          key="prescription"
+          onPress={() => navigation.navigate("Prescription")}
           >
         <Text style={{color:"green"}}>Details</Text>
       </TouchableOpacity>
@@ -33,7 +33,7 @@ class PatientList extends Component {
   //   super(props);
   //   this.showDetails = this.showDetails.bind(this);// you should bind this to the method that call the props
   // }
-  
+
   state = {
     data:[
         {
@@ -54,6 +54,7 @@ class PatientList extends Component {
 
   render(){
     const { details, editing } = this.state;
+      const { navigation } = this.props;
 
     return (
       <Block>
