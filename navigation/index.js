@@ -41,11 +41,11 @@ const screens = createStackNavigator(
     defaultNavigationOptions: {
       headerStyle: {
         height: theme.sizes.base * 4,
-        backgroundColor: theme.colors.white, // or 'white
+        backgroundColor: theme.colors.green, // or 'white
         borderBottomColor: "transparent",
         elevation: 0 // for android
       },
-      headerBackImage: <Image source={require("../assets/icons/back.png")} />,
+      headerBackImage: <Image source={require("../assets/icons/left.png")} />,
       headerBackTitle: null,
       headerLeftContainerStyle: {
         alignItems: "center",

@@ -1,7 +1,5 @@
 import React from "react";
 
-import firebase from 'firebase';
-
 import { LineChart } from "react-native-chart-kit";
 import {
   Dimensions,
@@ -13,54 +11,37 @@ import {
   ToastAndroid,
   AppRegistry
 } from "react-native";
-
-import { Card, Badge, Button, Block, Text } from "../components";
-
-import { Divider } from 'react-native-elements';
-
+import firebase from 'firebase';
+import { Card, Badge, Button, Block, Text, Divider } from "../components";
 
 import { theme, mocks } from "../constants";
 
 import call from "react-native-phone-call";
-import SendSMS from "react-native-sms-x";
+import SendSMS from 'react-native-sms-x';
+var pressureValues = [0];
+var averagePressure = 0 ;
 
 const { width } = Dimensions.get("window");
 
-class NursePatient extends React.Component {
-  state = {};
-
+class Linchart extends React.Component {
   componentWillMount() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    var totalPressure =0 ;
+    pressureValues=[];
+    var firebaseRef = firebase.database().ref('locations');
+    firebaseRef.on("child_added", function(child) {
+      var pressureData = child.val().stockingPressure;
+      pressureValues.push(pressureData);
+      totalPressure = totalPressure + pressureData;
+      // console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+    });
+    averagePressure = totalPressure/pressureValues.length;
+    console.log(JSON.stringify(pressureValues));
 
-        // To Configure react native app with cloud of Google Firebase database !
-        var firebaseConfig = {
-          apiKey: "AIzaSyDaVtfZ9h0A2ECQ5pF9r6HGk7rmRmv0EIg",
-          authDomain: "stocking-tracker.firebaseapp.com",
-          databaseURL: "https://stocking-tracker.firebaseio.com",
-          projectId: "stocking-tracker",
-          storageBucket: "stocking-tracker.appspot.com",
-          messagingSenderId: "528805073233",
-          appId: "1:528805073233:web:23aeaa8aadeb4cb97c0370",
-          measurementId: "G-DFHHG84ZLG"
-        };
-        // Initialize Firebase
-        //firebase.initializeApp(firebaseConfig);
-        pressureValues =[];
-        if (!firebase.apps.length) {
-          firebase.initializeApp(firebaseConfig);
-        }
-        var totalPressure =0 ;
-        var firebaseRef = firebase.database().ref('locations');
-        firebaseRef.on("child_added", function(child) {
-          var pressureData = child.val().stockingPressure;
-          pressureValues.push(pressureData);
-          totalPressure = totalPressure + pressureData;
-          // console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
-        });
-        averagePressure = totalPressure/pressureValues.length;
-        console.log(JSON.stringify(pressureValues));
-      }
-
-
+  }
+  state = {};
   renderChart() {
     return (
       <Block flex={1.0} column style={{ paddingHorizontal: 0 }}>
@@ -143,6 +124,7 @@ class NursePatient extends React.Component {
       </Block>
     );
   }
+  
 
   renderHeader() {
     const { user } = this.props;
@@ -151,6 +133,7 @@ class NursePatient extends React.Component {
       prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
     };
     return (
+        
       <Block flex={0.42} column style={{ paddingHorizontal: 15 }}>
         <Block flex={false} row style={{ paddingVertical: 15 }}>
           <Block style={{ marginLeft: 10 }}>
@@ -166,66 +149,62 @@ class NursePatient extends React.Component {
             shadow
             style={{ backgroundColor: "#ffffff", paddingVertical: 55 }}
           >
-            <Block>
-              <Block center style={{ position: "relative", marginLeft: -20 }}>
+            <Block >
+            <Block center style={{ position:"relative" ,marginLeft:-20}} >
+                <Image
+                    style={{
+                        position:"absolute",
+                        right: 120,
+                        top: -25,
+                        width: 50,
+                        height: 50
+                    }}
+                    source={require("../assets/icons/letterc.png")}
+                />
+                <Block style={{marginLeft:50 , position : "absolute" , width:200}}>
+                    <Text medium h2 height={0} style={{ color: "#000000", marginLeft:10,marginTop:-45}}>
+                        Christina Lewis
+                    </Text>
+                    <Text medium h4 height={0} style={{ color: "#000000", marginLeft:10,marginTop:0}}>
+                        Female, 47
+                    </Text>
+                    <Text medium h4 height={0} style={{ color: "#30cf82", marginLeft:10,marginTop:0}}>
+                        ID: 520
+                    </Text>
+                </Block>
+            </Block>
+            <Block style={{width:200, position:"absolute", marginLeft:100}}>
+              <Button  style={{ marginLeft:10,width:40,marginTop:-30}} onPress={() => call(args).catch(console.error)}>
+                    <Image
+                        style={{
+                        position: "absolute",
+                        width: 40,
+                        height: 40
+                        }}
+                        source={require("../assets/icons/supportnurse.png")}
+                    />
+              </Button>
+            
+              {/* <Button
+                style={{ position: "absolute", marginLeft:230, marginTop: 0 }
+                onPress={() => 
+                    console.log("Button pressed")
+                }
+              >
                 <Image
                   style={{
                     position: "absolute",
-                    right: 120,
-                    top: -25,
-                    width: 50,
-                    height: 50
+                    right: 0,
+                    top: 7,
+                    width: 30,
+                    height: 30
                   }}
-                  source={require("../assets/icons/letterc.png")}
+                  source={require("../assets/icons/message.png")}
                 />
-                <Block
-                  style={{ marginLeft: 50, position: "absolute", width: 200 }}
-                >
-                  <Text
-                    medium
-                    h2
-                    height={0}
-                    style={{ color: "#000000", marginLeft: 10, marginTop: -45 }}
-                  >
-                    Christina Lewis
-                  </Text>
-                  <Text
-                    medium
-                    h4
-                    height={0}
-                    style={{ color: "#000000", marginLeft: 10, marginTop: 0 }}
-                  >
-                    Female, 47
-                  </Text>
-                  <Text
-                    medium
-                    h4
-                    height={0}
-                    style={{ color: "#30cf82", marginLeft: 10, marginTop: 0 }}
-                  >
-                    ID: 520
-                  </Text>
-                </Block>
-              </Block>
-              <Block
-                style={{ width: 200, position: "absolute", marginLeft: 100 }}
-              >
-                <Button
-                  style={{ marginLeft: 10, width: 40, marginTop: -30 }}
-                  onPress={() => call(args).catch(console.error)}
-                >
-                  <Image
-                    style={{
-                      position: "absolute",
-                      width: 40,
-                      height: 40
-                    }}
-                    source={require("../assets/icons/supportnurse.png")}
-                  />
-                </Button>
-              </Block>
-            </Block>
+              </Button> */}
 
+            </Block>
+            </Block>
           </Card>
         </Block>
         <Block center flex={1}>
@@ -242,10 +221,10 @@ class NursePatient extends React.Component {
     );
   }
 }
-NursePatient.defaultProps = {
+Linchart.defaultProps = {
   chart: mocks.chart
 };
-export default NursePatient;
+export default Linchart;
 
 const styles = StyleSheet.create({
   safe: {
@@ -288,4 +267,4 @@ const styles = StyleSheet.create({
     maxWidth: width - theme.sizes.padding * 1.4 - theme.sizes.base
   }
 });
-AppRegistry.registerComponent("NursePatient", () => NursePatient);
+AppRegistry.registerComponent('NursePatient', () => NursePatient);

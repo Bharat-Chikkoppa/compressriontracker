@@ -122,4 +122,15 @@ const chart = [
   6
 ];
 
-export { categories, explore, products, profile, details,chart,stats };
+const firebaseConfig = {
+  apiKey: "AIzaSyDaVtfZ9h0A2ECQ5pF9r6HGk7rmRmv0EIg",
+  authDomain: "stocking-tracker.firebaseapp.com",
+  databaseURL: "https://stocking-tracker.firebaseio.com",
+  projectId: "stocking-tracker",
+  storageBucket: "stocking-tracker.appspot.com",
+  messagingSenderId: "528805073233",
+  appId: "1:528805073233:web:23aeaa8aadeb4cb97c0370",
+  measurementId: "G-DFHHG84ZLG"
+};
+
+export { categories, explore, products, profile, details,chart,stats,firebaseConfig };

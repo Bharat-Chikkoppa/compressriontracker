@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
+import firebase from 'firebase';
 
 import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
@@ -24,6 +25,18 @@ class Browse extends Component {
     active: "Products",
     categories: []
   };
+
+  componentWillMount() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(mocks.firebaseConfig);
+    }
+    var firebaseRef = firebase.database().ref('locations');
+    firebaseRef.on("child_added", function(child) {
+      var pressureData = child.val();
+      console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+    });
+
+  }
 
   componentDidMount() {
     this.setState({ categories: this.props.categories });
@@ -144,7 +157,7 @@ class Browse extends Component {
         </TouchableOpacity>
           <TouchableOpacity
                 key="usage"
-                onPress={() => navigation.navigate("Usage")}
+                onPress={() => navigation.navigate("NursePatient")}
               >
           <Card center middle shadow style={styles.category}>
               <Badge
@@ -189,7 +202,8 @@ class Browse extends Component {
 
 Browse.defaultProps = {
   profile: mocks.profile,
-  categories: mocks.categories
+  categories: mocks.categories,
+  firebaseConfig: mocks.firebaseConfig
 };
 
 export default Browse;
