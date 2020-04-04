@@ -4,102 +4,106 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  View,
+  FlatList
 } from "react-native";
 
 import { Card, Badge, Button, Block, Text } from "../components";
 import { theme, mocks } from "../constants";
+import firebase from 'firebase';
 
 import usagelogo from "../assets/icons/usage.png";
 import prescriptionlogo from "../assets/icons/prescription2.png";
 import sstatlogo from "../assets/icons/status.png";
 import supportlogo from "../assets/icons/support.png";
 import bluetoothlogo from "../assets/icons/bluetooth.png";
-
-
 const { width } = Dimensions.get("window");
 
+
+
 class nursehome extends Component {
+
+  renderItem = ({ item }) => {
+  
+    return (
+      <View style={styles.listItem}>
+        <Image source={{uri:item.photo}}  style={{width:60, height:60,borderRadius:30}} />
+        <View style={{alignItems:"center",flex:1}}>
+          <Text style={{fontWeight:"bold"}}>{item.name}</Text>
+          <Text>{item.position}</Text>
+        </View>
+        <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}}
+            onPress={() => this.props.navigation.navigate("NursePatient")}
+            >
+          <Text style={{color:"green"}}>Details</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   state = {
     active: "Products",
-    categories: []
+    categories: [],
+    details:{}
   };
+
+  componentWillMount() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(mocks.firebaseConfig);
+    }
+    var firebaseRef = firebase.database().ref('locations');
+    firebaseRef.on("child_added", function(child) {
+      var pressureData = child.val();
+      console.log(child.key+': '+JSON.stringify(child.val().stockingPressure));
+    });
+    
+  }
 
   componentDidMount() {
     this.setState({ categories: this.props.categories });
+    this.setState({ details: this.props.details });
   }
 
-  handleTab = tab => {
-    const { categories } = this.props;
-    const filtered = categories.filter(category =>
-      category.tags.includes(tab.toLowerCase())
-    );
-
-    this.setState({ active: tab, categories: filtered });
-  };
-
-  renderTab(tab) {
-    const { active } = this.state;
-    const isActive = active === tab;
-
-    return (
-      <TouchableOpacity
-        key={`tab-${tab}`}
-        onPress={() => this.handleTab(tab)}
-        style={[styles.tab, isActive ? styles.active : null]}
-      >
-        <Text size={16} medium gray={!isActive} secondary={isActive}>
-          {tab}
-        </Text>
-      </TouchableOpacity>
-    );
+  state = {
+    data:[
+        {
+            "name": "Christiana Lewis",
+            "email": "miyah.myles@gmail.com",
+            "position": "age: 48",
+            "photo": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+        },
+        {
+          "name": "Christiana ",
+          "email": "miya.myles@gmail.com",
+          "position": "age: 48",
+          "photo": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+      }
+    ]
   }
 
   render() {
-    const { profile, navigation } = this.props;
-    const { categories } = this.state;
-    //const tabs = ["Products", "Inspirations", "Shop"];
+    const { details, editing } = this.state;
+    const { navigation } = this.props;
 
     return (
       <Block>
-        <Block flex={false} row center space="between" style={styles.header}>
+         <Block flex={false} row center space="between" style={styles.header}>
           <Text h1 bold>
-            Dashboard
+            Prescription
           </Text>
-          <Button onPress={() => navigation.navigate("Settings")}>
-            <Image source={profile.avatar} style={styles.avatar} />
-          </Button>
+          {/* <Button>
+            <Image source={details.avatar} style={styles.avatar} />
+          </Button> */}
         </Block>
-
-
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{ paddingVertical: theme.sizes.base * 2 }}
-        >
-        <Block flex={false} row center space="between" style={styles.header}>
-        <TouchableOpacity
-                key="prescription"
-                onPress={() => navigation.navigate("NursePatient")}
-              >
-          <Card center middle shadow style={styles.category}>
-              <Badge
-                margin={[0, 0, 15]}
-                size={50}
-                // color="rgba(41,216,143,0.20)"
-              >
-                <Image source = {prescriptionlogo} />
-              </Badge>
-              <Text medium height={20}>
-                Prescription
-              </Text>
-
-          </Card>
-        </TouchableOpacity>
-
-        </Block>
-
-        </ScrollView>
+        <View style={styles.container}>
+          <FlatList
+            style={{flex:1}}
+            data={this.state.data}
+            renderItem={this.renderItem}
+            keyExtractor={item => item.email}
+            navigation={this.props.navigation}
+          />
+        </View>
       </Block>
     );
   }
@@ -113,36 +117,19 @@ nursehome.defaultProps = {
 export default nursehome;
 
 const styles = StyleSheet.create({
-  header: {
-    paddingHorizontal: theme.sizes.base * 2
+  container: {
+    flex: 1,
+    backgroundColor: '#F7F7F7',
+    marginTop:60
   },
-  avatar: {
-    height: theme.sizes.base * 2.2,
-    width: theme.sizes.base * 2.2
-  },
- /* tabs: {
-    borderBottomColor: theme.colors.gray2,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginVertical: theme.sizes.base,
-    marginHorizontal: theme.sizes.base * 2
-  },
-  tab: {
-    marginRight: theme.sizes.base * 2,
-    paddingBottom: theme.sizes.base
-  }, */
-  active: {
-    borderBottomColor: theme.colors.secondary,
-    borderBottomWidth: 3
-  },
-  categories: {
-    flexWrap: "wrap",
-    paddingHorizontal: theme.sizes.base * 2,
-    marginBottom: theme.sizes.base * 3.5
-  },
-  category: {
-    // this should be dynamic based on screen width
-    minWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
-    maxWidth: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2,
-    maxHeight: (width - theme.sizes.padding * 2.4 - theme.sizes.base) / 2
+  listItem:{
+    margin:10,
+    padding:10,
+    backgroundColor:"#FFF",
+    width:"80%",
+    flex:1,
+    alignSelf:"center",
+    flexDirection:"row",
+    borderRadius:5
   }
 });

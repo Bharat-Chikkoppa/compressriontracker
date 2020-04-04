@@ -26,7 +26,7 @@ const { width } = Dimensions.get("window");
 class Linchart extends React.Component {
   componentWillMount() {
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+      firebase.initializeApp(mocks.firebaseConfig);
     }
     var totalPressure =0 ;
     pressureValues=[];
